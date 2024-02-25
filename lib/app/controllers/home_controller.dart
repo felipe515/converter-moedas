@@ -2,16 +2,16 @@ import 'package:conversor_moedas/app/models/moeda_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeController {
-  List<MoedaModel> moedas;
+  late List<MoedaModel> moedas;
 
   TextEditingController toText = TextEditingController();
   TextEditingController fromText = TextEditingController();
 
-  MoedaModel toMoeda;
-  MoedaModel fromMoeda;
+  late MoedaModel toMoeda;
+  late MoedaModel fromMoeda;
 
-  HomeController() {
-    moedas = MoedaModel.getmoedas();
+  HomeController () {
+      moedas = MoedaModel.getmoedas();
       toMoeda = moedas[0];
       fromMoeda = moedas[1];
     
