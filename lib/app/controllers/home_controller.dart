@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 class HomeController {
   late List<MoedaModel> moedas;
 
-  TextEditingController toText = TextEditingController();
-  TextEditingController fromText = TextEditingController();
+  final TextEditingController toText;
+  final TextEditingController fromText;
 
   late MoedaModel toMoeda;
   late MoedaModel fromMoeda;
 
-  HomeController () {
-      moedas = MoedaModel.getmoedas();
-      toMoeda = moedas[0];
-      fromMoeda = moedas[1];
-    
+  HomeController({required this.toText, required this.fromText}) {
+    moedas = MoedaModel.getmoedas();
+    toMoeda = moedas[0];
+    fromMoeda = moedas[1];
   }
 
   void convert() {
     String text = toText.text;
-    double value = double.tryParse(text) ?? 1.0;
+    double value = double.tryParse(text.replaceAll(',', '.')) ?? 1.0;
     double returnValue = 0;
 
     if (fromMoeda.name == "Real") {
