@@ -1,58 +1,49 @@
+import 'package:conversor_moedas/app/models/moeda_model.dart';
 import 'package:flutter/material.dart';
 
-class MoedaBox extends StatefulWidget {
-  const MoedaBox({super.key});
+class MoedaBox extends StatelessWidget {
+  final List<MoedaModel> itens;
+  final MoedaModel selectedItem;
+  final TextEditingController controller;
+  final void Function(MoedaModel?)? onChanged;
 
-  @override
-  _MoedaBoxState createState() => _MoedaBoxState();
-}
-
-class _MoedaBoxState extends State<MoedaBox> {
-  String dropdownValue = 'Real';
+  const MoedaBox({super.key, required this.itens, required this.controller, required this.selectedItem, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: 56,
-                      child: DropdownButton(
-                        iconEnabledColor: Colors.amber,
-                        isExpanded: true,
-                        value: dropdownValue,
-                        underline: Container(
-                          height: 1,
-                          color: Colors.amber,
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: 'Real', child: Text('Real')),
-                          DropdownMenuItem(value: 'Dolar', child: Text('Dolar')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            dropdownValue = value.toString();
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Expanded(
-                    flex: 2,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.amber)
-                        ),
-                        
-                      ),
-                    ),
-                  ),
-                ],
-              );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 56,
+            child: DropdownButton<MoedaModel>(
+              iconEnabledColor: Colors.amber,
+              isExpanded: true,
+              value: selectedItem,
+              underline: Container(
+                height: 1,
+                color: Colors.amber,
+              ),
+              items: itens.map((e) => DropdownMenuItem(
+                value: e,
+                child: Text(e.name))).toList(),
+              onChanged: onChanged,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+         Expanded(
+          flex: 2,
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.amber)),
+            ),
+          ),
+        ),
+      ],
+    );
   }
-  
 }
-  
